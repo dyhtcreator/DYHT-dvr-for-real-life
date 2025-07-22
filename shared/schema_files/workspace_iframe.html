@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!-- saved from url=(0139)https://17090704-f95f-40ce-bc87-61cf72361be5-00-2ijz6cpx4e69g.riker.replit.dev/__replco/workspace_iframe.html?initialPath=%2F&id=%3Ar1kc%3A -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <style>
+      html,
+      body,
+      iframe {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+        height: 100%;
+        width: 100%;
+      }
+      body {
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <iframe id="iframe" sandbox="allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox allow-modals allow-downloads allow-downloads-without-user-activation allow-presentation allow-orientation-lock allow-scripts allow-pointer-lock" allow="accelerometer; ambient-light-sensor; autoplay; battery; camera; display-capture; encrypted-media; execution-while-not-rendered; execution-while-out-of-viewport; fullscreen; gamepad; geolocation; gyroscope; layout-animations; legacy-image-formats; magnetometer; microphone; midi; navigation-override; oversized-images; payment; picture-in-picture; publickey-credentials; speaker-selection; sync-xhr; unoptimized-images; unsized-media; usb; screen-wake-lock; web-share; xr-spatial-tracking; clipboard-read; clipboard-write" allowfullscreen="true" allowtransparency="true" allowpaymentrequest="true" allowpopups="true" src="./saved_resource(1).html"></iframe>
+    <script>
+      const iframe = document.getElementById('iframe');
+      const urlParams = new URLSearchParams(window.location.search);
+      const initialPath = urlParams.get('initialPath') || '/';
+      const webviewId = urlParams.get('id') || null;
+
+      function postMessageToWorkspace(data) {
+        const dataWithPaneId = { ...data, id: webviewId };
+
+        parent?.postMessage(dataWithPaneId, 'https://replit.com');
+        parent?.postMessage(dataWithPaneId, 'https://staging.replit.com');
+        parent?.postMessage(dataWithPaneId, 'https://firewalledreplit.com/');
+        parent?.postMessage(dataWithPaneId, 'https://staging.firewalledreplit.com/');
+        parent?.postMessage(dataWithPaneId, 'http://localhost:3000');
+        
+      }
+
+      window.addEventListener('message', (event) => {
+        if (
+          typeof event.data !== 'object' ||
+          event.data === null ||
+          !('type' in event.data)
+        ) {
+          
+          return;
+        }
+
+        if (event.origin === window.location.origin) {
+          
+          postMessageToWorkspace(event.data);
+
+          return;
+        }
+
+        
+        iframe.contentWindow.postMessage(event.data, window.location.origin);
+      });
+
+      function canAccessIframeWindow() {
+        try {
+          iframe.contentWindow.document.body;
+          return true;
+        } catch (err) {
+          return false;
+        }
+      }
+
+      
+      
+      
+      
+      async function checkThirdPartyCookie() {
+        let enabled = false;
+        if ('hasStorageAccess' in document) {
+          enabled = await document.hasStorageAccess();
+        }
+
+        if (!enabled) {
+          const testCookieName = '__replit_third_party_cookie_test__';
+          document.cookie = `${testCookieName}=1;`;
+          enabled = document.cookie.indexOf(testCookieName) !== -1;
+          
+          document.cookie = `${testCookieName}=1; max-age=0;`;
+        }
+        
+        postMessageToWorkspace({
+          type: 'third-party-cookie-check',
+          payload: {
+            enabled
+          }
+        });
+      }
+
+      function postLocation() {
+        if (!canAccessIframeWindow()) {
+          postMessageToWorkspace({
+            type: 'page-navigation',
+            payload: {
+              isExternal: true,
+            },
+          });
+
+          return;
+        }
+
+        postMessageToWorkspace({
+          type: 'page-navigation',
+          payload: {
+            isExternal: false,
+            relativeUrl:
+              iframe.contentWindow.location.pathname +
+              iframe.contentWindow.location.search +
+              iframe.contentWindow.location.hash,
+          },
+        });
+      }
+      function onIframeLoad() {
+        
+        
+        postLocation();
+        
+        
+        checkThirdPartyCookie();
+
+        if (canAccessIframeWindow()) {
+          
+          const script = document.createElement('script');
+          script.type = 'text/javascript';
+          script.src = 'https://replit.com/public/js/beacon.js';
+          iframe.contentDocument.head.appendChild(script);
+          
+          
+          iframe.contentWindow.addEventListener('popstate', postLocation);
+          iframe.contentWindow.addEventListener('hashchange', postLocation);
+          iframe.contentWindow.addEventListener('__replit-history-event', postLocation);
+        }
+      }
+      iframe.addEventListener('load', onIframeLoad);
+      iframe.src = new URL(initialPath, window.location.origin).href;
+    </script>
+  
+
+</body></html>

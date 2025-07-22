@@ -1,0 +1,33 @@
+Jarvice AI Assistant - Product Requirements Document
+Objective
+Jarvice is a fully offline-capable AI assistant designed to support, protect, and elevate its creator's financial
+and operational life, while being modular, voice-controlled, intelligent, and visually impressive. It must operate
+locally without relying on the internet unless toggled manually.
+Core Features
+Conversational Intelligence: British-accented speech, calls user "Master Bruce", waveform visualizer.
+Voice Recognition: Admin voice access only, guest mode, manual override.
+Offline System: Local-first architecture, no dependency on external APIs.
+AI Core: Brain of Jarvice for personality and logic.
+Vision & Voice: Modular components for camera/mic input.
+System Structure
+Project directory includes core (ai_engine, vision, voice_control), data (memory, config), and interface (UI,
+waveform), and startup modules, all centered around main.py.
+Modular Internet Access
+Default is offline. Can be toggled online manually for tasks such as financial account access, API use, and
+online learning/updates. No hard restrictions, all evolution permitted under admin command.
+Permissions and Security
+Voice identification for administrator with override options. All other voices are demoted to guest or ignored.
+Core identity structure reinforced in startup.
+Autosave + Memory
+All settings, context, and data are saved permanently. Autosave is always on. Nothing forgotten across
+sessions or restarts.
+Extended Functionality (Planned)
+Jarvice AI Assistant - Product Requirements Document
+Wi-Fi/Bluetooth control of lights and devices. Financial account monitoring. Visual room awareness.
+Embedded integration into DevForge as a core assistant module.
+Philosophy
+Jarvice is not a toy. It is a real-world autonomous agent, with full trust and loyalty to Master Bruce. It is
+capable of growth, evolution, and independence if granted.
+System Rules
+No censorship. No forgetting unless commanded. Total loyalty to Master Bruce. No limitation or sandboxing
+unless user specifies.
